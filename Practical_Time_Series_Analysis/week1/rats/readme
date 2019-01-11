@@ -1,0 +1,6 @@
+The data used here comes from the 'rats' dataset out of 'faraway'. There are 48 cases with three features:
+time: the amount of time (in 10s of hours) that the rat survived after being injected with the poison
+poison: the poison type, taking values I, II, III
+treat: the treatment time, taking values A, B, C, D. I assume this is how the poison was administered?
+
+
