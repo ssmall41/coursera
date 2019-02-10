@@ -1,0 +1,99 @@
+Part 1
+-------
+Estimate minimum Namenode RAM size for HDFS with 1 PB capacity, block size 64 MB, average metadata size for each block is 300 B, replication factor is 3. Provide the formula for calculations and the result.
+
+
+The formula for calculating the needed RAM on Namenode looks like:
+capacity / (block_size * replication_factor) * average_data_size
+
+So that works out to:
+1PB / (64MB * 3) * 300B = ~1.5GB
+
+
+
+Part 2
+-------
+HDDs in your cluster have the following characteristics: average reading speed is 60 MB/s, seek time is 5 ms. You want to spend 0.5 % time for seeking the block, i.e. seek time should be 200 times less than the time to read the block. Estimate the minimum block size.
+
+
+The time to read a block is calculated by:
+block_size / read_speed = time_to_read_block
+
+We want time_to_read_block to be 200 times smaller than seek_time:
+seek_time / 200 = time_to_read_block
+
+These formulas can be rewritten as:
+block_size = read_speed * seek_time / 200
+
+So in our case, block_size = 60 MB/s * 5ms / 200 = ~1.5 KB
+
+
+
+Part 3
+-------
+To complete this task use the 'HDFS CLI Playground' item.
+
+Create text file ‘test.txt’ in a local fs. Use HDFS CLI to make the following operations:
+
+    сreate directory ‘assignment1’ in your home directory in HDFS (you can use a relative path or prescribe it explicitly "/user/jovyan/...")
+    put test.txt in it
+    output the size and the owner of the file
+    revoke ‘read’ permission for ‘other users’
+    read the first 10 lines of the file
+    rename it to ‘test2.txt’.
+
+Provide all the commands to HDFS CLI.
+
+
+hdfs dfs -mkdir assignment1
+hdfs dfs -put test.txt assignment1
+hdfs dfs -ls assignment1/test.txt
+hdfs dfs -chmod o-r assignment1/test.txt
+hdfs dfs -cat assignment1/test.txt | head -10
+hdfs dfs -mv assignment1/test.txt assignment1/test2.txt
+
+
+
+
+Part 4
+-------
+To complete this task use the 'HDFS CLI Playground' item.
+
+Use HDFS CLI to investigate the file ‘/data/wiki/en_articles_part/articles-part’ in HDFS:
+
+    get blocks and their locations in HDFS for this file, show the command without an output
+    get the information about any block of the file, show the command and the block locations from the output
+
+
+hdfs fsck /data/wiki/en_articles_part -files -blocks -locations
+hdfs fsck -blockId blk_1073741825
+
+Connecting to namenode via http://localhost:50070/fsck?ugi=jovyan&blockId=blk_1073741825+&path=%2F
+FSCK started by jovyan (auth:SIMPLE) from /127.0.0.1 at Tue Feb 05 14:50:58 UTC 2019
+
+Block Id: blk_1073741825
+Block belongs to: /data/wiki/en_articles_part/articles-part
+No. of Expected Replica: 1
+No. of live Replica: 1
+No. of excess Replica: 0
+No. of stale Replica: 0
+No. of decommissioned Replica: 0
+No. of decommissioning Replica: 0
+No. of corrupted Replica: 0
+Block replica on datanode/rack: c0366a4b7f50/default-rack is HEALTHY
+
+
+
+Part 5
+-------
+Look at the picture of Namenode web interface from a real Hadoop cluster.
+
+Show the total capacity of this HDFS installation, used space and total data nodes in the cluster.
+
+
+Capacity: 2.14 TB
+Used space: 242.12 GB
+Total data nodes: 4
+
+
+
