@@ -1,0 +1,4 @@
+To run a docker file from bigdatateam, use a command like:
+
+docker run --rm -it -p 8080:8888 bigdatateam/yarn-notebook
+
