@@ -21,8 +21,10 @@ void RandomPlayer::make_move()
     unsigned int w;
     bool success = false;
     
+    // Set the device to this player's
     cudaSetDevice(device_id);
 
+    // Make a move until we find a column with space
     while(!success)
     {
         w = rand() % width;

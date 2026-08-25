@@ -1,8 +1,10 @@
+// nvcc -o connect_four *.cu
 #include "connect_four.h"
 
 
 int main()
 {
+    // Create the board
     unsigned int width = 8, height = 5, num_threads = 16;
     auto b = std::make_shared<Board>(width, height, num_threads);
     srand(time(NULL));
