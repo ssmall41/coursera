@@ -1,6 +1,6 @@
 # Canny Edge Detection with NPP
 
-This program uses NPP convert .jpg files to an image of their edges. The code was tested on Imagenet data. The program is written in C++.
+This program uses NPP convert .jpg files to an image of their edges. The code was tested on [ImageNet](https://www.image-net.org/) data. The program is written in C++.
 
 ![image](examples/13805553_1c0c7a9fcc.jpg)
 ![image](examples/13805553_1c0c7a9fcc_edges.jpg)
