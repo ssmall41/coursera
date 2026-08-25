@@ -13,6 +13,7 @@ It's assumed that NPP and the cuda runtime API are installed. The code also uses
 Just run `make` from the root of the project. The output is the executable `canny_npp_example`.
 
 # How to run
+Use the included bash script `run.sh`. Alternatively, execute:
 ```
 ./canny_npp_example directory_of_input_images/ directory_of_output_images/
 ```
