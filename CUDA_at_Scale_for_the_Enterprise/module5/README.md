@@ -10,9 +10,7 @@ This program uses NPP convert .jpg files to an image of their edges. The code wa
 It's assumed that NPP and the cuda runtime API are installed. The code also uses the [stb library](https://github.com/nothings/stb) for reading/writing jpg files. The headers stb_image.h and stb_image_write.h are included in this codebase.
 
 # How to compile
-```
-nvcc canny_npp_example.cpp -o canny_npp_example -lnppc -lnppif -lnppicc -lnppisu -lnppial -lcudart
-```
+Just run `make` from the root of the project. The output is the executable `canny_npp_example`.
 
 # How to run
 ```
