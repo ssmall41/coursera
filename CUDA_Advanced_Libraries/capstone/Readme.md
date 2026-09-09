@@ -35,8 +35,9 @@ For actual note Bb5, estimating Bb5.
 For actual note B5, estimating B5.
 ```
 
-Using an FFT to identify the note seems to be fairly active, however the octave can be tricky. In the above output, the note is always correct, but the octave is often wrong. This is consistent across many instruments and is a known "trap". Many instruments do NOT always produce the strongest frequency at the note they play, but rather in different octaves of the note. Identifying the correct note requires more than just a simple FFT.
+Using an FFT to identify the pitch class seems to be fairly accurate, however the octave can be tricky. In the above output, the pitch class is always correct, but the octave is often wrong. This is consistent across many instruments and is a known "trap". Many instruments do NOT always produce the strongest frequency at the note they play, but rather in different octaves of that note. Identifying the correct note, and more than just the pitch class, requires more than just a simple FFT.
 
+A quick note: there are sometimes errors in the pitch class as well, but they are much rarer.
 
 ## Notebook
 There is also a directory called `notebooks`. This includes some Python notebooks used for analyzing the data. It's not needed for running the programming.
