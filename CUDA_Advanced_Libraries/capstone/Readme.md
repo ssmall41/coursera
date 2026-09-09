@@ -19,6 +19,8 @@ sh run.sh
 ```
 
 ## Analysis
+Notes are represented in the program as their pitch class (A, B, Bb, C, etc) and their octave (1-9). For example, `Bb5` is to be understood as B-flat in the fifth octave, `C4` is C in the fourth octave (i.e. "middle C"), etc.
+
 An example output for the Oboe in the 5th octave is as follows:
 ```
 For actual note C5, estimating C6.
