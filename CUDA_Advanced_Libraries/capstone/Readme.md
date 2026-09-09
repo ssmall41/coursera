@@ -9,14 +9,14 @@ Before running, input data is needed and expected to be provided in the director
 
 ## Compiling and Running
 To compile, simply run:
-'''
+```
 make all
-'''
+```
 
 To compile and run, use the included script
-'''
+```
 sh run.sh
-'''
+```
 
 ## Analysis
 An example output for the Oboe in the 5th octave is as follows:
