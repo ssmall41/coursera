@@ -62,7 +62,7 @@ std::string freq_to_note(double frequency)
 }
 
 // Given a real-valued time series and the sample rate, find the dominant frequency
-double find_dominant_frequency(const std::vector<float>& signal, int samplerate)
+double find_dominant_frequency(const std::vector<float>& signal, int samplerate, cufftHandle plan)
 {
     const int N = static_cast<int>(signal.size());
     if (N <= 0)
@@ -78,8 +78,8 @@ double find_dominant_frequency(const std::vector<float>& signal, int samplerate)
     CUDA_CHECK(cudaMemcpy(d_input, signal.data(), sizeof(float) * N, cudaMemcpyHostToDevice));
 
     // Create and execute the cuFFT plan
-    cufftHandle plan;
-    CUFFT_CHECK(cufftPlan1d(&plan, N, CUFFT_R2C, 1));
+    //cufftHandle plan;
+    //CUFFT_CHECK(cufftPlan1d(&plan, N, CUFFT_R2C, 1));
     CUFFT_CHECK(cufftExecR2C(plan, d_input, d_output));
     CUDA_CHECK(cudaDeviceSynchronize());
 
@@ -154,13 +154,19 @@ void scanInstrument(const std::string& label, const std::vector<std::string>& no
 {
     std::cout << "Scanning the " << label << " data........................" << std::endl;
 
+    // Define limits on the signal. Use something in the middle to avoid edge problems.
+    const size_t start = 5000;
+    const size_t end = 6000;
+    const int N = static_cast<int>(signal.size());
+
+    // Create the cuFFT plan here
+    cufftHandle plan;
+    CUFFT_CHECK(cufftPlan1d(&plan, N, CUFFT_R2C, 1));
+
     for (size_t i = 0; i < notes.size(); ++i)
     {
         const std::vector<float>& full = data[i];
         const int samplerate = samplerates[i];
-
-        const size_t start = 5000;
-        const size_t end = 6000;
 
         if (full.size() < end) {
             std::cerr << "  Warning: signal for note " << notes[i]
@@ -170,7 +176,7 @@ void scanInstrument(const std::string& label, const std::vector<std::string>& no
 
         std::vector<float> segment(full.begin() + start, full.begin() + end);
 
-        double estimated_freq = find_dominant_frequency(segment, samplerate);
+        double estimated_freq = find_dominant_frequency(segment, samplerate, plan);
         std::string estimated_note = freq_to_note(estimated_freq);
 
         std::cout << "For actual note " << notes[i] << ", estimating " << estimated_note << "." << std::endl;
